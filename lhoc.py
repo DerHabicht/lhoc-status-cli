@@ -1,11 +1,11 @@
 #!/usr/bin/env pipenv-shebang
 
 import click
+import os
 import requests
 
 
-#BASE_URL = 'http://10.0.0.25:5000'
-BASE_URL = 'http://localhost:5000'
+BASE_URL = os.getenv('LHOC_SERVER')
 
 
 @click.group()
