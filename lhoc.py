@@ -6,11 +6,17 @@ import requests
 
 
 BASE_URL = os.getenv('LHOC_SERVER')
+VERSION = '1.0.2'
 
 
 @click.group()
 def cli():
     pass
+
+
+@cli.command()
+def version():
+    print(f'LHOC Status CLI {VERSION}')
 
 
 @cli.command()
@@ -51,8 +57,8 @@ def asset_linking(host: str, file: str):
 @job.command()
 @click.argument('host')
 @click.argument('total')
-@click.option('--pdf', default=False, type=bool)
-def statement_import(host: str, total: int, pdf: bool):
+@click.option('--pdf', default=False, is_flag=True)
+def fuga_import(host: str, total: int, pdf: bool):
     data = {
         'host': host,
         'total': total,
