@@ -6,7 +6,7 @@ import requests
 
 
 BASE_URL = os.getenv('LHOC_SERVER')
-VERSION = '1.1.0'
+VERSION = '1.2.0'
 
 
 @click.group()
@@ -29,6 +29,12 @@ def activation(level: int):
 @click.argument('level')
 def readcon(level: int):
     report(post_status('readcon', level))
+
+
+@cli.command()
+@click.argument('level')
+def capalcon(level: int):
+    report(post_status('capalcon', level))
 
 
 @cli.command()
@@ -109,6 +115,7 @@ def post_status(endpoint: str, level) -> dict:
 
 def report(response: dict):
     print(f"READCON {response['readcon']['level']}")
+    print(f"CAPALCON {response['capalcon']['level']}")
     print(f"LHOC {response['lhoc']['level']}")
     print(f"SECCON {response['seccon']['level']}")
 
