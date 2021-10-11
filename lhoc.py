@@ -6,7 +6,7 @@ import requests
 
 
 BASE_URL = os.getenv('LHOC_SERVER')
-VERSION = '1.0.2'
+VERSION = '1.1.0'
 
 
 @click.group()
@@ -67,6 +67,21 @@ def fuga_import(host: str, total: int, pdf: bool):
         data['type'] = 'fuga-pdf-statements'
     else:
         data['type'] = 'fuga-statements'
+
+    post_job(data)
+
+
+@job.command()
+@click.argument('host')
+@click.argument('statement_export_id')
+def fuga_generate(host: str, statement_export_id: str):
+    session = input('Reporting session cookie value:')
+    data = {
+        'type': 'fuga-statement-generation',
+        'host': host,
+        'statement_export_id': statement_export_id,
+        'session': session,
+    }
 
     post_job(data)
 
