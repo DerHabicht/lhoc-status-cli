@@ -6,7 +6,7 @@ import requests
 
 
 BASE_URL = os.getenv('LHOC_SERVER')
-VERSION = '1.2.1'
+VERSION = '1.5.0'
 
 
 @click.group()
@@ -17,6 +17,28 @@ def cli():
 @cli.command()
 def version():
     print(f'LHOC Status CLI {VERSION}')
+
+
+@cli.command()
+@click.option('--station')
+def metar(station: str):
+    if station:
+        resp = requests.post(f'{BASE_URL}/metar', json={'station_id': station})
+    else:
+        resp = requests.post(f'{BASE_URL}/metar')
+
+    resp.raise_for_status()
+
+
+@cli.command()
+@click.option('--station')
+def taf(station: str):
+    if station:
+        resp = requests.post(f'{BASE_URL}/taf', json={'station_id': station})
+    else:
+        resp = requests.post(f'{BASE_URL}/taf')
+
+    resp.raise_for_status()
 
 
 @cli.command()
