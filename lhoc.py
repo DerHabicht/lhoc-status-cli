@@ -6,7 +6,7 @@ import requests
 
 
 BASE_URL = os.getenv('LHOC_SERVER')
-VERSION = '1.5.0'
+VERSION = '1.6.0'
 
 
 @click.group()
@@ -105,6 +105,19 @@ def fuga_import(host: str, total: int, pdf: bool):
 def fuga_generate(host: str, statement_export_id: str):
     data = {
         'type': 'fuga-statement-generation',
+        'host': host,
+        'statement_export_id': statement_export_id,
+    }
+
+    post_job(data)
+
+
+@job.command()
+@click.argument('host')
+@click.argument('statement_export_id')
+def fuga_pdf_export(host: str, statement_export_id: str):
+    data = {
+        'type': 'fuga-pdf-statement-export',
         'host': host,
         'statement_export_id': statement_export_id,
     }
